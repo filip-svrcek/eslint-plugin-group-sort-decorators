@@ -1,0 +1,19 @@
+{
+  "name": "eslint-plugin-group-sort-decorators",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@typescript-eslint/parser": "^8.34.0",
+    "@typescript-eslint/rule-tester": "^8.34.0",
+    "@typescript-eslint/utils": "^8.34.0",
+    "eslint": "^9.28.0",
+    "jest": "^30.0.0"
+  }
+}
