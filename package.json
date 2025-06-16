@@ -5,7 +5,16 @@
   "scripts": {
     "test": "jest"
   },
-  "keywords": [],
+  "keywords": [
+  "eslint",
+  "eslintplugin",
+  "decorators",
+  "sort",
+  "group",
+  "typescript",
+  "lint",
+  "eslint-plugin"
+],
   "author": "",
   "license": "MIT",
   "description": "An ESLint plugin to enforce grouping and sorting of decorators by import source, with optional alphabetical sorting within groups.",
