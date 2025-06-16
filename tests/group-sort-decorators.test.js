@@ -55,6 +55,46 @@ ruleTester.run('group-sort', rule, {
       class Test {}
       `,
       options: [{ groups: ['lib-a'], alphabeticalWithinGroups: false }]
+    },
+
+    // Duplicate cases using require
+    {
+      code: `
+      const { A } = require('lib-a');
+      const { B } = require('lib-b');
+      @A()
+      @B()
+      class Test {}
+      `,
+      options: [{ groups: ['lib-a', 'lib-b'] }]
+    },
+    // Single decorator, should be valid
+    {
+      code: `
+      const { A } = require('lib-a');
+      @A()
+      class Test {}
+      `,
+      options: [{ groups: ['lib-a', 'lib-b'] }]
+    },
+    {
+      code: `
+      const { B, A } = require('lib-a');
+      @A()
+      @B()
+      class Test {}
+      `,
+      options: [{ groups: ['lib-a'] }]
+    },
+    // Decorators from same group, alphabeticalWithinGroups false
+    {
+      code: `
+      const { B, A } = require('lib-a');
+      @B()
+      @A()
+      class Test {}
+      `,
+      options: [{ groups: ['lib-a'], alphabeticalWithinGroups: false }]
     }
   ],
   invalid: [
@@ -109,6 +149,66 @@ ruleTester.run('group-sort', rule, {
       `,
       output: `
       import { B, A } from 'lib-a';
+      @A()
+      @B()
+      class Test {}
+      `,
+      options: [{ groups: ['lib-a'], alphabeticalWithinGroups: true }],
+      errors: [{ messageId: 'reorder' }]
+    },
+
+    // Duplicate cases using require
+    {
+      code: `
+      const { A } = require('lib-a');
+      const { B } = require('lib-b');
+      @B()
+      @A()
+      class Test {}
+      `,
+      output: `
+      const { A } = require('lib-a');
+      const { B } = require('lib-b');
+      @A()
+      @B()
+      class Test {}
+      `,
+      options: [{ groups: ['lib-a', 'lib-b'] }],
+      errors: [{ messageId: 'reorder' }]
+    },
+    // Out of order with three decorators, mixed groups
+    {
+      code: `
+      const { A } = require('lib-a');
+      const { B } = require('lib-b');
+      const { C } = require('lib-c');
+      @C()
+      @B()
+      @A()
+      class Test {}
+      `,
+      output: `
+      const { A } = require('lib-a');
+      const { B } = require('lib-b');
+      const { C } = require('lib-c');
+      @A()
+      @B()
+      @C()
+      class Test {}
+      `,
+      options: [{ groups: ['lib-a', 'lib-b', 'lib-c'] }],
+      errors: [{ messageId: 'reorder' }]
+    },
+    // Out of order within group, alphabeticalWithinGroups true
+    {
+      code: `
+      const { B, A } = require('lib-a');
+      @B()
+      @A()
+      class Test {}
+      `,
+      output: `
+      const { B, A } = require('lib-a');
       @A()
       @B()
       class Test {}
