@@ -7,8 +7,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "description": "",
+  "license": "MIT",
+  "description": "An ESLint plugin to enforce grouping and sorting of decorators by import source, with optional alphabetical sorting within groups.",
   "devDependencies": {
     "@typescript-eslint/parser": "^8.34.0",
     "@typescript-eslint/rule-tester": "^8.34.0",
