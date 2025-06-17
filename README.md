@@ -1,6 +1,6 @@
 # eslint-plugin-group-sort-decorators
 
-[![npm version](https://badge.fury.io/js/eslint-plugin-group-sort-decorators.svg)](https://badge.fury.io/js/eslint-plugin-group-sort-decorators.svg)
+[![npm version](https://badge.fury.io/js/eslint-plugin-group-sort-decorators.svg)](https://www.npmjs.com/package/eslint-plugin-group-sort-decorators)
 
 An ESLint plugin to enforce consistent grouping and ordering of decorators based on their import source, with optional alphabetical sorting within groups.
 
