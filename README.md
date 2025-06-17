@@ -19,7 +19,10 @@ Add `group-sort-decorators` to your ESLint plugins and configure the rule in you
   "plugins": ["group-sort-decorators"],
   "rules": {
     "group-sort-decorators/group-sort": ["warn", {
-      "groups": ["lib-a", "lib-b", "lib-c"],
+      "groups": {
+        "first": ["lib-a"],
+        "last": ["lib-b"]
+      },
       "alphabeticalWithinGroups": true
     }]
   }
@@ -32,22 +35,29 @@ This rule enforces that decorators are grouped and ordered according to the impo
 
 ### Options
 
-- `groups` (array, **required**): Ordered list of import paths to group decorators by.
+- `groups.first` (array): List of import sources whose decorators should always come first, in order.
+- `groups.last` (array): List of import sources whose decorators should always come last, in order.
+- Decorators from sources not listed in `first` or `last` will be placed in the middle, sorted alphabetically by import source.
 - `alphabeticalWithinGroups` (boolean, default: `true`): Whether to sort decorators alphabetically within each group.
 
 ### Example
 
 **Given this config:**
 ```json
-"groups": ["lib-a", "lib-b"]
+"groups": {
+  "first": ["lib-a"],
+  "last": ["lib-b"]
+}
 ```
 
 **Valid:**
 ```ts
 import { A } from 'lib-a';
+import { C } from 'lib-c';
 import { B } from 'lib-b';
 
 @A()
+@C()
 @B()
 class Test {}
 ```
@@ -55,15 +65,18 @@ class Test {}
 **Invalid:**
 ```ts
 import { A } from 'lib-a';
+import { C } from 'lib-c';
 import { B } from 'lib-b';
 
 @B()
+@C()
 @A()
 class Test {}
 ```
 Will be auto-fixed to:
 ```ts
 @A()
+@C()
 @B()
 class Test {}
 ```
